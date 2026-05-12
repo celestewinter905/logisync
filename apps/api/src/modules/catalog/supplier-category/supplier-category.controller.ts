@@ -37,8 +37,6 @@ import { SupplierCategoryService } from './supplier-category.service';
 
 @ApiTags('Supplier Categories')
 @Controller('catalog/categories')
-@UseGuards(JwtAuthGuard, RbacGuard)
-@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 @ApiBearerAuth('access-token')
 export class SupplierCategoryController {
 	constructor(
@@ -46,6 +44,8 @@ export class SupplierCategoryController {
 	) {}
 
 	@Post()
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@HttpCode(HttpStatus.CREATED)
 	@ApiOperation({ summary: 'Create a supplier category (US-19)' })
 	@ApiBody({ type: CreateSupplierCategoryDto })
@@ -67,6 +67,8 @@ export class SupplierCategoryController {
 	}
 
 	@Get()
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'List supplier categories in the caller workspace',
 	})
@@ -79,6 +81,8 @@ export class SupplierCategoryController {
 	}
 
 	@Get('check-name')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'Real-time unique name check (BR-152)',
 	})
@@ -92,6 +96,8 @@ export class SupplierCategoryController {
 	}
 
 	@Get(':id')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({ summary: 'Get supplier category detail' })
 	@ApiParam({ name: 'id', type: 'string', format: 'uuid' })
 	@ApiResponse({ status: 200, description: 'Category details' })
@@ -101,6 +107,8 @@ export class SupplierCategoryController {
 	}
 
 	@Patch(':id')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'Update supplier category name / description (US-20)',
 	})
@@ -126,6 +134,8 @@ export class SupplierCategoryController {
 	}
 
 	@Delete(':id')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary:
 			'Soft-delete supplier category — sets is_active = false (blocked if products exist)',

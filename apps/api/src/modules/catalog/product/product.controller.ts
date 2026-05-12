@@ -38,13 +38,13 @@ import { ProductService } from './product.service';
 
 @ApiTags('Products')
 @Controller('catalog/products')
-@UseGuards(JwtAuthGuard, RbacGuard)
-@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 @ApiBearerAuth('access-token')
 export class ProductController {
 	constructor(private readonly productService: ProductService) {}
 
 	@Post()
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@HttpCode(HttpStatus.CREATED)
 	@ApiOperation({
 		summary: 'Create a product — status defaults to draft (US-21)',
@@ -68,6 +68,8 @@ export class ProductController {
 	}
 
 	@Get()
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary:
 			'List products in the caller workspace with filters + pagination (US-24)',
@@ -98,6 +100,8 @@ export class ProductController {
 	}
 
 	@Get('check-sku')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'Real-time unique SKU check',
 	})
@@ -111,6 +115,8 @@ export class ProductController {
 	}
 
 	@Get(':id')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({ summary: 'Get product detail' })
 	@ApiParam({ name: 'id', type: 'string', format: 'uuid' })
 	@ApiResponse({ status: 200, description: 'Product details' })
@@ -120,6 +126,8 @@ export class ProductController {
 	}
 
 	@Get(':id/price-history')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'Retrieve price change history',
 	})
@@ -134,6 +142,8 @@ export class ProductController {
 	}
 
 	@Patch(':id')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'Update product details — omits sku and status (US-22)',
 	})
@@ -158,6 +168,8 @@ export class ProductController {
 	}
 
 	@Patch(':id/publish')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'Transition draft → active or inactive → active',
 	})
@@ -180,6 +192,8 @@ export class ProductController {
 	}
 
 	@Patch(':id/unpublish')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'Transition active → inactive (US-23)',
 	})
@@ -202,6 +216,8 @@ export class ProductController {
 	}
 
 	@Delete(':id')
+	@UseGuards(JwtAuthGuard, RbacGuard)
+	@Roles('supplier_staff', 'supplier_manager', 'company_admin')
 	@ApiOperation({
 		summary: 'Hard delete — only allowed when status = draft',
 	})
