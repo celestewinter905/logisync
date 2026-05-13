@@ -28,6 +28,12 @@ export const purchaseOrders = pgTable('purchase_orders', {
 		.notNull()
 		.default('pending_approval'),
 	totalPrice: integer('total_price').notNull(),
+	// Snapshot columns (QAR-25, BR-212). Frozen at the moment of quotation selection so the PO
+	// stays valid even if the source quotation is later altered or corrupted. Never reference
+	// the linked quotation at runtime for these values.
+	finalUnitPrice: integer('final_unit_price'),
+	finalPaymentTerms: text('final_payment_terms'),
+	finalDeliveryDate: timestamp('final_delivery_date', { withTimezone: true }),
 	isLocked: boolean('is_locked').notNull().default(true),
 	rejectionReason: text('rejection_reason'),
 	autoConfirmAt: timestamp('auto_confirm_at', { withTimezone: true }),
