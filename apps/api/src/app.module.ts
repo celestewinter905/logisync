@@ -10,7 +10,6 @@ import { HealthModule } from './core/health/health.module';
 import { SecurityModule } from './core/security/security.module';
 import { SessionModule } from './core/session/session.module';
 import { WorkersModule } from './core/workers/workers.module';
-import { CacheModule } from './infrastructure/cache/cache.module';
 import { DatabaseModule } from './infrastructure/database/database.module';
 import { MessageQueueModule } from './infrastructure/message-queue/message-queue.module';
 import { ObjectStorageModule } from './infrastructure/object-storage/object-storage.module';
@@ -44,7 +43,6 @@ import { SourcingModule } from './modules/sourcing/sourcing.module';
 		MasterDataModule,
 		CatalogModule,
 		MediaModule,
-		CacheModule,
 		SourcingModule,
 	],
 	controllers: [AppController],

@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { AuditModule } from '../../core/audit/audit.module';
-import { CacheModule } from '../../infrastructure/cache/cache.module';
+import { SessionModule } from '../../core/session/session.module';
 import { MessageQueueModule } from '../../infrastructure/message-queue/message-queue.module';
 import { IamModule } from '../iam/iam.module';
 import { QuotationController } from './quotation/quotation.controller';
@@ -14,7 +14,7 @@ import { ProductSearchRepository } from './search/product-search.repository';
 import { ProductSearchService } from './search/product-search.service';
 
 @Module({
-	imports: [AuditModule, IamModule, MessageQueueModule, CacheModule],
+	imports: [AuditModule, IamModule, MessageQueueModule, SessionModule],
 	controllers: [ProductSearchController, RfqController, QuotationController],
 	providers: [
 		ProductSearchService,

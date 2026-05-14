@@ -1,6 +1,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment, @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-return, @typescript-eslint/no-unsafe-call, @typescript-eslint/no-unsafe-argument */
 import { Injectable, Logger } from '@nestjs/common';
-import { CacheService } from '../../../infrastructure/cache/cache.service';
+import { SessionRegistryService } from '../../../core/session/session-registry.service';
 import type { ProductSearchQueryDto } from './product-search.dto';
 import { ProductSearchRepository } from './product-search.repository';
 
@@ -16,7 +16,7 @@ export class ProductSearchService {
 
 	constructor(
 		private readonly productSearchRepo: ProductSearchRepository,
-		private readonly cacheService: CacheService,
+		private readonly sessionRegistry: SessionRegistryService,
 	) {}
 
 	async search(
@@ -28,13 +28,13 @@ export class ProductSearchService {
 		// load the previously saved filter when the caller omits it entirely.
 		let supplierWorkspaceIds = query.supplierWorkspaceIds;
 		if (supplierWorkspaceIds && supplierWorkspaceIds.length > 0) {
-			await this.cacheService.setJsonEx(
+			await this.sessionRegistry.setJsonEx(
 				searchFilterKey(userId),
 				supplierWorkspaceIds,
 				SEARCH_FILTER_TTL_SECONDS,
 			);
 		} else if (supplierWorkspaceIds === undefined) {
-			const cached = await this.cacheService.getJson<string[]>(
+			const cached = await this.sessionRegistry.getJson<string[]>(
 				searchFilterKey(userId),
 			);
 			if (cached && cached.length > 0) {
@@ -87,7 +87,9 @@ export class ProductSearchService {
 	private async loadReputationScore(
 		supplierWorkspaceId: string,
 	): Promise<number | null> {
-		const raw = await this.cacheService.get(reputationKey(supplierWorkspaceId));
+		const raw = await this.sessionRegistry.get(
+			reputationKey(supplierWorkspaceId),
+		);
 		if (raw === null) return null;
 		const parsed = Number(raw);
 		return Number.isFinite(parsed) ? parsed : null;
