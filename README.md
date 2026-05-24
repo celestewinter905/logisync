@@ -1,15 +1,18 @@
-# LogiSync - Hệ thống hỗ trợ hoạt động Logistics
+# LogiSync — Multi-tenant Logistics Platform
 
-## 🚀 Quick Start
+LogiSync is a monorepo (Turborepo + pnpm workspaces) that hosts the
+LogiSync API, web app, and mobile app from a single source tree.
 
-### 1. Chuẩn bị
+## Quick start
+
+### 1. Install
 
 ```bash
 pnpm install
 pnpm prepare
 ```
 
-### 2. Database & Infrastructure
+### 2. Database & infrastructure
 
 ```bash
 pnpm db:setup:local
@@ -19,34 +22,56 @@ pnpm db:studio
 ### 3. Development
 
 ```bash
-pnpm dev           # Tất cả services
-pnpm dev:api       # NestJS Backend
-pnpm dev:web       # Next.js Frontend
-pnpm dev:mobile    # React Native Mobile
+pnpm dev           # All services in parallel
+pnpm dev:api       # NestJS backend only
+pnpm dev:web       # Next.js frontend only
+pnpm dev:mobile    # React Native (Expo) only
 ```
 
-### 4. Verify Installation
+### 4. Verify the install
 
 ```bash
 curl http://localhost:3000/health/ready
 curl http://localhost:3000/health
 ```
 
----
+## Repository layout
 
-## Commit Convention
+```
+.
+├── apps/
+│   ├── api/          NestJS backend
+│   ├── web/          Next.js frontend (App Router)
+│   └── mobile/       Expo / React Native client
+├── packages/
+│   └── api-client/   Tiny shared `apiFetch` helper used by web and mobile
+├── docs/             Per-app and architecture documentation
+└── turbo.json        Task pipeline definitions
+```
 
-Always use `pnpm commit` to create commits with proper format:
+The `packages/` directory previously contained `constants`, `session`,
+`shared-types`, `storage`, and `ui` — all unused workspace packages.
+They were removed in the web refactor; consult git history if they
+need to be restored.
+
+## Commit convention
+
+Always use `pnpm commit` to produce a Commitizen-formatted message:
 
 ```bash
 pnpm commit
 ```
 
-### Format: `<type>(<scope>): <subject>`
+### Format
 
-**Types**: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `chore`, `ci`
+```
+<type>(<scope>): <subject>
+```
 
-**Scopes**: `api`, `web`, `mobile`, `db`, `auth`, `validation`, `config`, etc.
+* **Types**: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`,
+  `test`, `chore`, `ci`.
+* **Scopes**: `api`, `web`, `mobile`, `db`, `auth`, `validation`,
+  `config`, …
 
 ### Examples
 
@@ -58,21 +83,29 @@ docs(api): update validation guide
 
 ### Rules
 
-- Use imperative mood ("add" not "added")
-- No period at the end
-- Max 50 characters for subject
-- Reference issues: `Closes #123`
+* Imperative mood ("add", not "added").
+* No trailing period.
+* Subject ≤ 50 characters.
+* Reference issues with `Closes #123`.
 
----
+## Key features
 
-## ✨ Key Features
+* Multi-tenant workspace model (supplier / buyer / carrier).
+* Product & order management.
+* Real-time GPS tracking and ETA.
+* e-POD (electronic proof of delivery).
+* Invoice and payment management.
+* Append-only, tamper-proof audit logging.
+* Security stack: RBAC, bcrypt, Postgres row-level security, JWT.
+* Health checks and background workers (scheduled tasks).
 
-- ✅ Multi-tenant Workspace (Supplier/Buyer/Carrier)
-- ✅ Product & Order Management
-- ✅ Real-time GPS Tracking & ETA
-- ✅ e-POD (Electronic Proof of Delivery)
-- ✅ Invoice & Payment Management
-- ✅ **Audit Logging** (Append-only, tamper-proof)
-- ✅ **Security** (RBAC, Bcrypt, RLS)
-- ✅ **Health Checks** & Monitoring
-- ✅ **Background Workers** (Scheduled tasks)
+## Documentation
+
+* [`docs/README.md`](./docs/README.md) — top-level documentation hub.
+* [`docs/api/README.md`](./docs/api/README.md) — backend.
+* [`docs/web/README.md`](./docs/web/README.md) — frontend.
+* [`docs/mobile/README.md`](./docs/mobile/README.md) — mobile.
+* [`apps/web/README.md`](./apps/web/README.md) — web app layout and
+  architecture overview.
+* [`apps/web/README_DEVELOPMENT_GUIDELINES.md`](./apps/web/README_DEVELOPMENT_GUIDELINES.md)
+  — Server vs. Client components, React Query, Zustand, Zod, auth.

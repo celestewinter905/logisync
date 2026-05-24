@@ -1,24 +1,25 @@
 # Mobile Docs
 
-Khu vực dành cho tài liệu `apps/mobile`.
+Documentation hub for `apps/mobile` (the LogiSync Expo app).
 
-## Quick Start
-
-Mobile app hiện là Expo app.
+## Quick start
 
 ```bash
 pnpm --filter @logisync/mobile dev
 ```
 
-Nếu cần reset starter scaffold:
+If the starter scaffold needs to be reset:
 
 ```bash
 pnpm --filter @logisync/mobile reset-project
 ```
 
-## Gợi ý thêm sau
+## TODO
 
-- offline flow
-- build/release
-- environment setup
-- push notifications
+The following docs are still pending and should be written by the
+team that owns the relevant feature area:
+
+* Offline-first sync flow.
+* Build and release pipeline (EAS).
+* Environment setup (Android Studio, Xcode, Expo Go).
+* Push notifications.
