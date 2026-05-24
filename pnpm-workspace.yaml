@@ -1,6 +1,6 @@
 packages:
-  - "apps/*" # Nơi chứa api, web, admin, mobile
-  - "packages/*" # Nơi chứa shared-types, ui-kit, configs
+  - "apps/*" # api, web, admin, mobile
+  - "packages/*" # shared utilities (api-client, etc.)
 allowBuilds:
   '@nestjs/core': true
   '@scarf/scarf': true
